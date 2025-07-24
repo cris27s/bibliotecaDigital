@@ -1,0 +1,50 @@
+<div class="login-container">
+  <div class="login-header">
+    <h1>Biblioteca Online</h1>
+    <p class="slogan"></p>
+  </div>
+  
+  <form (ngSubmit)="ingresar()" #loginForm="ngForm" class="login-form">
+    <div class="form-group mb-3">
+      <label for="usuario" class="form-label">
+        <i class="bi bi-person-fill"></i> Usuario Biblioteca
+      </label>
+      <input 
+        type="text" 
+        id="usuario" 
+        name="usuario" 
+        [(ngModel)]="usuario" 
+        class="form-control" 
+        required
+        placeholder="Ej: usuario">
+    </div>
+    
+    <div class="form-group mb-3">
+      <label for="contrasena" class="form-label">
+        <i class="bi bi-lock-fill"></i> Contraseña
+      </label>
+      <input 
+        type="password" 
+        id="contrasena" 
+        name="contrasena" 
+        [(ngModel)]="contrasena" 
+        class="form-control" 
+        required
+        placeholder="Ingrese su clave">
+    </div>
+    
+    <div class="d-grid gap-2 mb-3">
+      <button 
+        type="submit" 
+        class="btn btn-warning btn-login" 
+        [disabled]="!usuario || !contrasena">
+        <i class=""></i> Acceder a la Biblioteca
+      </button>
+    </div>
+    
+    <div *ngIf="error" class="alert alert-danger">
+      <i class="bi bi-exclamation-triangle-fill"></i> Credenciales incorrectas
+    </div>
+    
+  </form>
+</div>

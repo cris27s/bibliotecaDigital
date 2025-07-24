@@ -1,0 +1,92 @@
+<div class="usuarios-container">
+  <!-- Formulario de usuario -->
+  <div class="card form-card">
+    <div class="card-header">
+      <h3>{{ modoEdicion ? 'Editar Usuario' : 'Agregar Nuevo Usuario' }}</h3>
+    </div>
+    <div class="card-body">
+      <form #usuarioForm="ngForm" (ngSubmit)="guardarUsuario()">
+        <div class="form-group">
+          <label for="nombre"><i class="bi bi-person-badge"></i> Nombre</label>
+          <input type="text" id="nombre" name="nombre" class="form-control" 
+                 [(ngModel)]="nuevoUsuario.nombre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="correo"><i class="bi bi-envelope"></i> Correo</label>
+          <input type="email" id="correo" name="correo" class="form-control" 
+                 [(ngModel)]="nuevoUsuario.correo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="contrasena"><i class="bi bi-lock"></i> Contraseña</label>
+          <div class="input-group">
+            <input [type]="mostrarContrasena ? 'text' : 'password'" 
+                   id="contrasena" name="contrasena" class="form-control" 
+                   [(ngModel)]="nuevoUsuario.contrasena" required>
+            <button class="btn btn-eye" type="button" 
+                    (click)="mostrarContrasena = !mostrarContrasena">
+              <i class="bi" [class.bi-eye]="!mostrarContrasena" [class.bi-eye-slash]="mostrarContrasena"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-save" [disabled]="!usuarioForm.valid">
+            <i class="bi bi-save"></i> {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+          </button>
+          <button type="button" class="btn btn-cancel" *ngIf="modoEdicion" 
+                  (click)="postAccion()">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lista de usuarios -->
+  <div class="card users-card">
+    <div class="card-header">
+      <h3>Lista de Usuarios</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Contraseña</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let usuario of usuarios">
+              <td>{{ usuario.id }}</td>
+              <td>{{ usuario.nombre }}</td>
+              <td>{{ usuario.correo }}</td>
+              <td>
+                <div class="password-field">
+                  <span *ngIf="!usuario.mostrarContrasena">••••••••</span>
+                  <span *ngIf="usuario.mostrarContrasena">{{ usuario.contrasena }}</span>
+                  <button class="btn btn-eye-sm" (click)="toggleContrasena(usuario)">
+                    <i class="bi" [class.bi-eye]="!usuario.mostrarContrasena" [class.bi-eye-slash]="usuario.mostrarContrasena"></i>
+                  </button>
+                </div>
+              </td>
+              <td class="actions">
+                <button class="btn btn-edit" (click)="editarUsuario(usuario)">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-delete" (click)="eliminarUsuario(usuario.id!)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="autores-estaticos">
+  <h1 class="titulo-biblioteca">Autores de Nuestra Biblioteca</h1>
+
+  <div class="botones-autor" style="margin-bottom: 20px;">
+    <button class="btn btn-agregar" (click)="onAgregar()">Añadir Autor</button>
+    <button class="btn btn-actualizar" [disabled]="!autorSeleccionado" (click)="onActualizar()">Actualizar Autor</button>
+    <button class="btn btn-borrar" [disabled]="!autorSeleccionado" (click)="abrirModalConfirmar(autorSeleccionado)">Borrar Autor</button>
+  </div>
+
+  <div *ngFor="let autor of autores" class="autor-card"
+       [class.selected]="autor === autorSeleccionado"
+       (click)="autorSeleccionado = autor">
+    <h2>{{ autor.nombre }}</h2>
+    <p class="nacionalidad"><i class="fas fa-feather-alt"></i> Nacionalidad: {{ autor.nacionalidad }}</p>
+    <p class="descripcion">{{ autor.descripcion }}</p>
+  </div>
+</div>
+
+<div *ngIf="mostrarModalConfirmar" class="modal-overlay">
+  <div class="modal-content">
+    <p>¿Estás seguro que quieres borrar al autor "<strong>{{ autorSeleccionado?.nombre }}</strong>"?</p>
+    <button (click)="confirmarBorrado()">Sí, borrar</button>
+    <button (click)="cerrarModalConfirmar()">Cancelar</button>
+  </div>
+</div>
+
+<div *ngIf="mostrarModalForm" class="modal-overlay">
+  <div class="modal-content">
+    <h3>{{ modoForm === 'agregar' ? 'Añadir Autor' : 'Actualizar Autor' }}</h3>
+    <form (ngSubmit)="guardarAutor()" #autorFormRef="ngForm">
+      <label for="nombre">Nombre:</label><br />
+      <input id="nombre" name="nombre" [(ngModel)]="autorForm.nombre" required /><br /><br />
+
+      <label for="nacionalidad">Nacionalidad:</label><br />
+      <input id="nacionalidad" name="nacionalidad" [(ngModel)]="autorForm.nacionalidad" required /><br /><br />
+
+      <label for="descripcion">Descripción:</label><br />
+      <textarea id="descripcion" name="descripcion" [(ngModel)]="autorForm.descripcion" rows="3" required></textarea><br /><br />
+
+      <button type="submit" [disabled]="!autorFormRef.form.valid">
+        {{ modoForm === 'agregar' ? 'Añadir' : 'Actualizar' }}
+      </button>
+      <button type="button" (click)="cerrarModalForm()">Cancelar</button>
+    </form>
+  </div>
+</div>

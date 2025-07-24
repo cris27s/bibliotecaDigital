@@ -1,0 +1,33 @@
+<div class="usuarios-container">
+  <h1 class="titulo">Usuarios Registrados</h1>
+
+  <div class="usuarios-lista">
+    <div
+      *ngFor="let usuario of usuarios"
+      class="usuario-card"
+      [class.seleccionado]="usuario === usuarioSeleccionado"
+      (click)="seleccionarUsuario(usuario)"
+    >
+      <h3>{{ usuario.nombre }}</h3>
+      <p>{{ usuario.email }}</p>
+      <div class="acciones">
+        <button (click)="abrirFormularioEditar(); $event.stopPropagation()">✏️ Editar</button>
+        <button (click)="borrarUsuario(); $event.stopPropagation()">🗑️ Borrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" *ngIf="mostrarFormularioEditar">
+    <div class="modal-content">
+      <h2>Editar Usuario</h2>
+      <label>Nombre:</label>
+      <input [(ngModel)]="editNombre" />
+      <label>Email:</label>
+      <input [(ngModel)]="editEmail" />
+      <div class="botones-modal">
+        <button (click)="guardarCambios()">💾 Guardar</button>
+        <button (click)="cancelarEdicion()">❌ Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>

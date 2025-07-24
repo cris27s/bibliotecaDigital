@@ -1,0 +1,92 @@
+/* Estilos generales */
+body {
+  font-family: 'Georgia', serif;
+  color: #4e342e;
+  background-color: #faf5e6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header principal */
+header {
+  text-align: center;
+  padding: 1.5rem 0;
+  background-color: #f5f0e6;
+  font-size: 2.4rem;
+  color: #5d4037;
+  border-bottom: 3px solid #a97449;
+}
+
+/* Layout principal */
+.main-layout {
+  display: flex;
+  max-width: 1100px;
+  margin: 2rem auto;
+  gap: 2rem;
+}
+
+/* Sidebar (Libros Destacados) */
+.sidebar {
+  flex: 1;
+  background-color: #fff8e1;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(94, 60, 29, 0.2);
+}
+
+.sidebar h3 {
+  color: #6d4c41;
+  border-left: 5px solid #a97449;
+  padding-left: 1rem;
+  margin-top: 0;
+}
+
+.sidebar ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  padding-left: 0;
+}
+
+/* Contenido principal */
+.contenido-principal {
+  flex: 2;
+  background-color: #fff8e1;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(94, 60, 29, 0.2);
+}
+
+.contenido-principal section {
+  margin-bottom: 2rem;
+}
+
+.contenido-principal h2 {
+  color: #5d4037;
+  border-bottom: 3px solid #a97449;
+  padding-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.contenido-principal p {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+.contenido-principal ul {
+  list-style-type: circle;
+  margin-left: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  padding-left: 0;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1rem 0;
+  font-family: 'Georgia', serif;
+  color: #5d4037;
+  margin-top: 3rem;
+}

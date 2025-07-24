@@ -1,0 +1,42 @@
+<div class="libros-container">
+  <h1 class="titulo-libros">Catálogo de Libros</h1>
+
+  <div class="botones-acciones">
+    <button (click)="onAgregar()">Añadir Libro</button>
+    <button [disabled]="!libroSeleccionado" (click)="onActualizar()">Actualizar Libro</button>
+    <button [disabled]="!libroSeleccionado" (click)="abrirModalConfirmar(libroSeleccionado)">Borrar Libro</button>
+  </div>
+
+  <div *ngFor="let libro of libros" class="libro-card" 
+       [class.selected]="libro === libroSeleccionado"
+       (click)="libroSeleccionado = libro">
+    <h3>{{ libro.titulo }}</h3>
+    <p>{{ libro.autor }}</p>
+  </div>
+</div>
+
+<!-- Modal Confirmación para borrar -->
+<div *ngIf="mostrarModalConfirmar" class="modal-overlay">
+  <div class="modal-content">
+    <p>¿Estás seguro que quieres borrar el libro "<strong>{{ libroSeleccionado?.titulo }}</strong>"?</p>
+    <button (click)="confirmarBorrado()">Sí, borrar</button>
+    <button (click)="cerrarModalConfirmar()">Cancelar</button>
+  </div>
+</div>
+
+<!-- Modal Form para añadir / actualizar -->
+<div *ngIf="mostrarModalForm" class="modal-overlay">
+  <div class="modal-content">
+    <h3>{{ modoForm === 'agregar' ? 'Añadir Libro' : 'Actualizar Libro' }}</h3>
+    <form (ngSubmit)="guardarLibro()" #libroFormRef="ngForm">
+      <label for="titulo">Título:</label><br />
+      <input id="titulo" name="titulo" [(ngModel)]="libroForm.titulo" required /><br /><br />
+      <label for="autor">Autor:</label><br />
+      <input id="autor" name="autor" [(ngModel)]="libroForm.autor" required /><br /><br />
+      <button type="submit" [disabled]="!libroFormRef.form.valid">
+        {{ modoForm === 'agregar' ? 'Añadir' : 'Actualizar' }}
+      </button>
+      <button type="button" (click)="cerrarModalForm()">Cancelar</button>
+    </form>
+  </div>
+</div>
