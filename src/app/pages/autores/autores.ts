@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule,} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AutorService, Autor } from '../../services/autores.service';
 
@@ -11,12 +11,13 @@ import { AutorService, Autor } from '../../services/autores.service';
   styleUrls: ['./autores.css']
 })
 export class Autores implements OnInit {
-  mostrarModalConfirmar: boolean = false;
-  mostrarModalForm: boolean = false;
+  mostrarModalConfirmar = false;
+  mostrarModalForm = false;
   autorSeleccionado: Autor | null = null;
   autores: Autor[] = [];
 
   autorForm: Partial<Autor> = {
+    id_autor: undefined,
     nombre: '',
     nacionalidad: '',
     descripcion: ''
@@ -33,7 +34,7 @@ export class Autores implements OnInit {
   cargarAutores(): void {
     this.autorService.obtenerAutores().subscribe({
       next: (data) => this.autores = data,
-      error: (err) => console.error('Error al cargar autores', err)
+      error: (err) => console.error('Error al cargar autores:', err)
     });
   }
 
@@ -53,6 +54,7 @@ export class Autores implements OnInit {
         next: () => {
           this.autores = this.autores.filter(a => a.id_autor !== this.autorSeleccionado?.id_autor);
           this.cerrarModalConfirmar();
+          this.autorSeleccionado = null;
         },
         error: (err) => console.error('Error al eliminar autor:', err)
       });
@@ -79,7 +81,7 @@ export class Autores implements OnInit {
   }
 
   guardarAutor(): void {
-    const { nombre, nacionalidad, descripcion } = this.autorForm;
+    const { id_autor, nombre, nacionalidad, descripcion } = this.autorForm;
 
     if (!nombre?.trim() || !nacionalidad?.trim() || !descripcion?.trim()) {
       alert('Por favor, complete todos los campos');
@@ -94,9 +96,9 @@ export class Autores implements OnInit {
         },
         error: (err) => console.error('Error al agregar autor:', err)
       });
-    } else if (this.modoForm === 'actualizar' && this.autorSeleccionado) {
+    } else if (this.modoForm === 'actualizar' && id_autor !== undefined) {
       const autorActualizado: Autor = {
-        id_autor: this.autorSeleccionado.id_autor,
+        id_autor,
         nombre,
         nacionalidad,
         descripcion
@@ -104,11 +106,12 @@ export class Autores implements OnInit {
 
       this.autorService.actualizarAutor(autorActualizado).subscribe({
         next: (res) => {
-          Object.assign(this.autorSeleccionado!, res);
+          const index = this.autores.findIndex(a => a.id_autor === res.id_autor);
+          if (index !== -1) this.autores[index] = res;
           this.cerrarModalForm();
         },
         error: (err) => console.error('Error al actualizar autor:', err)
-      });
-    }
-  }
+      });
+    }
+  }
 }
