@@ -4,7 +4,7 @@
   <div class="botones-autor" style="margin-bottom: 20px;">
     <button class="btn btn-agregar" (click)="onAgregar()">Añadir Autor</button>
     <button class="btn btn-actualizar" [disabled]="!autorSeleccionado" (click)="onActualizar()">Actualizar Autor</button>
-    <button class="btn btn-borrar" [disabled]="!autorSeleccionado" (click)="abrirModalConfirmar(autorSeleccionado)">Borrar Autor</button>
+    <button class="btn btn-borrar" [disabled]="!autorSeleccionado" (click)="abrirModalConfirmar(autorSeleccionado!)">Borrar Autor</button>
   </div>
 
   <div *ngFor="let autor of autores" class="autor-card"

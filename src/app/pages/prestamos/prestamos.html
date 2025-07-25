@@ -1,33 +1,83 @@
-<div class="usuarios-container">
-  <h1 class="titulo">Usuarios Registrados</h1>
+<div class="prestamos-container">
+  <h1 class="titulo">Préstamos Registrados</h1>
 
-  <div class="usuarios-lista">
+  <div class="acciones-globales">
+    <button (click)="abrirFormularioNuevo()">➕ Añadir Préstamo</button>
+  </div>
+
+  <div class="prestamos-lista">
     <div
-      *ngFor="let usuario of usuarios"
-      class="usuario-card"
-      [class.seleccionado]="usuario === usuarioSeleccionado"
-      (click)="seleccionarUsuario(usuario)"
+      *ngFor="let prestamo of prestamos"
+      class="prestamo-card"
+      [class.seleccionado]="prestamo === prestamoSeleccionado"
+      (click)="seleccionarPrestamo(prestamo)"
     >
-      <h3>{{ usuario.nombre }}</h3>
-      <p>{{ usuario.email }}</p>
+      <h3>Préstamo #{{ prestamo.id_prestamo }}</h3>
+      <p><strong>ID Libro:</strong> {{ prestamo.id_libro }}</p>
+      <p><strong>ID Usuario:</strong> {{ prestamo.id_usuario }}</p>
+      <p><strong>Fecha Préstamo:</strong> {{ prestamo.fecha_prestamo }}</p>
+      <p><strong>Fecha Devolución:</strong> {{ prestamo.fecha_devolucion }}</p>
+      <p><strong>Estado:</strong> {{ prestamo.estado }}</p>
       <div class="acciones">
         <button (click)="abrirFormularioEditar(); $event.stopPropagation()">Editar</button>
-        <button (click)="borrarUsuario(); $event.stopPropagation()">🗑️ Borrar</button>
+        <button (click)="borrarPrestamo(); $event.stopPropagation()">🗑 Borrar</button>
       </div>
     </div>
   </div>
 
+  <!-- Formulario Editar -->
   <div class="modal" *ngIf="mostrarFormularioEditar">
     <div class="modal-content">
-      <h2>Editar Usuario</h2>
-      <label>Nombre:</label>
-      <input [(ngModel)]="editNombre" />
-      <label>Email:</label>
-      <input [(ngModel)]="editEmail" />
+      <h2>Editar Préstamo</h2>
+
+      <label>Fecha Préstamo:</label>
+      <input type="date" [(ngModel)]="editFechaPrestamo" />
+
+      <label>Fecha Devolución:</label>
+      <input type="date" [(ngModel)]="editFechaDevolucion" />
+
+      <label>Estado:</label>
+      <select [(ngModel)]="editEstado">
+        <option value="activo">Activo</option>
+        <option value="devuelto">Devuelto</option>
+        <option value="atrasado">Atrasado</option>
+      </select>
+
       <div class="botones-modal">
-        <button (click)="guardarCambios()">💾 Guardar</button>
-        <button (click)="cancelarEdicion()">❌ Cancelar</button>
+        <button (click)="guardarCambios()">Guardar</button>
+        <button (click)="cancelarEdicion()">Cancelar</button>
       </div>
     </div>
   </div>
+
+  <!-- Formulario Añadir -->
+  <div class="modal" *ngIf="mostrarFormularioNuevo">
+    <div class="modal-content">
+      <h2>Añadir Préstamo</h2>
+
+      <label>ID Libro:</label>
+      <input [(ngModel)]="nuevoPrestamo.id_libro" />
+
+      <label>ID Usuario:</label>
+      <input [(ngModel)]="nuevoPrestamo.id_usuario" />
+
+      <label>Fecha Préstamo:</label>
+      <input type="date" [(ngModel)]="nuevoPrestamo.fecha_prestamo" />
+
+      <label>Fecha Devolución:</label>
+      <input type="date" [(ngModel)]="nuevoPrestamo.fecha_devolucion" />
+
+      <label>Estado:</label>
+      <select [(ngModel)]="nuevoPrestamo.estado">
+        <option value="activo">Activo</option>
+        <option value="devuelto">Devuelto</option>
+        <option value="atrasado">Atrasado</option>
+      </select>
+
+      <div class="botones-modal">
+        <button (click)="guardarNuevoPrestamo()">Guardar</button>
+        <button (click)="cancelarNuevoPrestamo()">Cancelar</button>
+      </div>
+    </div>
+  </div>
 </div>
